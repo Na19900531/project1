@@ -13,7 +13,7 @@ def register_user(username, password, role):
     hashed_password = hash_password(password)
 
     cursor.execute("""
-        INSERT INTO users (username, password, role)
+        INSERT INTO users (username, hashed_password, role)
         VALUES (%s, %s, %s)
     """, (username, hashed_password, role))
 
@@ -30,7 +30,7 @@ def login_user(username, password):
 
     cursor.execute("""
         SELECT role FROM users
-        WHERE username = %s AND password = %s
+        WHERE username = %s AND hashed_password = %s
     """, (username, hashed_password))
 
     result = cursor.fetchone()
@@ -39,3 +39,4 @@ def login_user(username, password):
     conn.close()
 
     return result
+

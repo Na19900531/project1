@@ -15,7 +15,7 @@ st.set_page_config(page_title="Client Query Management System")
 
 st.title("Client Query Management System")
 
-# session state
+
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.role = None
@@ -24,7 +24,6 @@ if "logged_in" not in st.session_state:
 menu = ["Login", "Register"]
 choice = st.sidebar.selectbox("Menu", menu)
 
-# ---------------- REGISTER ----------------
 if choice == "Register":
     st.subheader("Register New User")
 
@@ -37,7 +36,6 @@ if choice == "Register":
         st.success("User registered successfully")
         st.info("Go to Login to continue")
 
-# ---------------- LOGIN ----------------
 elif choice == "Login":
     st.subheader("Login")
 
@@ -55,7 +53,7 @@ elif choice == "Login":
         else:
             st.error("Invalid username or password")
 
-# ---------------- AFTER LOGIN ----------------
+
 if st.session_state.logged_in:
     st.sidebar.markdown("---")
     st.sidebar.write(f"👤 User: {st.session_state.username}")
