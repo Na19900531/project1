@@ -1,11 +1,10 @@
 import hashlib
 from db_connection import get_connection
 
-# convert password to hash
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# register new user
+
 def register_user(username, password, role):
     conn = get_connection()
     cursor = conn.cursor()
@@ -21,7 +20,7 @@ def register_user(username, password, role):
     cursor.close()
     conn.close()
 
-# login user
+
 def login_user(username, password):
     conn = get_connection()
     cursor = conn.cursor()

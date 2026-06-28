@@ -1,12 +1,35 @@
-from login import register_user, login_user
+import hashlib
+from db_connection import get_connection
 
-# register test users (run only once)
-register_user("client1", "client123", "Client")
-register_user("support1", "support123", "Support")
+def register_user(username, password, role):
+    conn = get_connection()
+    cursor = conn.cursor()
 
-print("Users registered")
+  
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
 
-# test login
-print(login_user("client1", "client123"))
-print(login_user("support1", "support123"))
+    cursor.execute("SELECT 1 FROM users WHERE username = %s", (username,))
+    if cursor.fetchone():
+    
+        cursor.execute("""
+            UPDATE users
+            SET hashed_password = %s, role = %s
+            WHERE username = %s
+        """, (hashed_password, role, username))
+        action = "updated"
+    else:
+       
+        cursor.execute("""
+            INSERT INTO users (username, hashed_password, role)
+            VALUES (%s, %s, %s)
+        """, (username, hashed_password, role))
+        action = "registered"
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+    print(f"User '{username}' {action} successfully.")
+
+
+

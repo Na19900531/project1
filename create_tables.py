@@ -3,7 +3,7 @@ from db_connection import get_connection
 conn = get_connection()
 cursor = conn.cursor()
 
-# users table
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(100),
@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS users (
 );
 """)
 
-# queries table
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS queries (
     query_id SERIAL PRIMARY KEY,
